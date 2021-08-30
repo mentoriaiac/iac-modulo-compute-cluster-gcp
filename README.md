@@ -1,58 +1,78 @@
-##  Template Modulo Terraform
-Este repositorio deve conter a estrutura básica para a criação de uma modulo do [terraform](https://www.terraform.io/). 
+##  Módulo iac-modulo-compute-cluster-gcp
+Este repositório permite a criação de um cluster na Google Cloud Platform (GCP).
 
- $`` module-example/``
- 
- |--- main.tf  
- |--- variable.tf  
- |--- outputs.tf  
- |--- version.tf
-
-
- Esses são os nomes de arquivos recomendados para um modulo mínimo, mesmo se estiverem vazios. 
- 
- ``main.tf`` deve ser o ponto de entrada principal.
- Para um modulo simples, pode ser aqui que todos os recursos que são criados. Para uma modulo complexo pode ser divido em varios arquivos.
- 
- ``variables.tf e outputs.tf`` deve conter as declarações das variaves e as saidas respectivamente.
- 
- ``versions.tf`` deve contem as versões dos recursos/provedores
-
-## Requirements
+## Requisitos
 
 | Name | Version |
 |------|---------|
-| Terraform | >= 0.13.0 |
+| Terraform | >= 1.0.0 |
 
 ## Providers
   
 | Name | Version |
 |------|---------|
-| local | n/a |
+| hashicorp/google | >= 3.81.0 |
 
-## Resources
+## Entradas
 
-| Name | Type |
-|------|------|
-| local_file | resource |
-| local_file | data source |
-
-## Inputs
-
-| Name | Description | Type | Default | Required |
+| Nome | Descrição | Tipo | Valor padrão | Obrigatório |
 |------|-------------|------|---------|:--------:|
-|ferramenta_1 | exemplo de variavel | `string` | `"terraform"` | no |
-|ferramenta_2 | exemplo de variavel | `string` | `"ansible"` | no |
-|programa | exemplo de variavel | `string` | `"mentoria-iac"` | no |
+| project_id | ID do projeto onde será criado o cluster | `string` | - | sim |
+| name | Nome do cluster | `string` | - | sim |
+| region | Região do cluster | `string` | - | sim |
+| network | Rede do cluster | `string` | - | sim |
+| subnetwork | Sub-rede do cluster | `string` | - | sim |
+| node_pools | Lista descrevendo os componentes do cluster | `list(object)*` | - | sim |
 
-## Outputs
- 
+\* A lista de componentes do cluster, ou o parâmetro _node_pools_, deve conter Objetos descritos pelos seguintes atributos:
+
+```hcl
+object {
+  number_of_compute = number
+  name              = string
+  instance_image    = string
+  machine_type      = string
+  labels            = map(string)
+}
+```
+
+### Atributos do Objeto _node_pools_ 
+
+| Nome | Descrição | Tipo | Valor padrão | Obrigatório |
+|------|-------------|------|---------|:--------:|
+| number_of_compute | Número de instâncias | `number` | - | sim |
+| name | Nome do componente do cluster | `string` | - | sim |
+| instance_image | Image usada na criação da instância | `string` | - | sim |
+| machine_type | Tipo (ou tamanho) da instância  | `string` | - | sim |
+| labels | Labels que serão associados às instâncias | `map(string)` | - | sim |
+
+## Outputs (TODO)
+
 | Name | Description |
 |------|-------------|
-|ferramentas | exemplo de saida |
+| ferramentas | exemplo de saida |
 
 ## Testar localmente
 
-Aqui você descreve como a pessoa que utilizar esse módulo pode testar localmente. Coloque todos os detalhes necessários para executar localmente.
+Para testar localmente este módulo, seguir os passos abaixo:
 
+1. Clonar o repositório:
+```shell
+git clone git@github.com:mentoriaiac/iac-modulo-compute-cluster-gcp.git
+```
+
+2. Navegar até o diretório de exemplo do módulo:
+```shell
+cd iac-modulo-compute-cluster-gcp/how-to-use-this-module/
+```
+
+3. Executar o exemplo do módulo:
+```shell
+# Plano de execução do módulo
+make plan
+# Aplicação do módulo para criação de recursos
+make apply
+# Destruição dos recursos criados pelo módulo
+make destroy
+```
   

@@ -8,7 +8,7 @@ locals {
 module "compute_gcp" {
   source = "github.com/mentoriaiac/iac-modulo-compute-gcp.git"
 
-  count = lookup(var.node_pool, "count", 0)
+  count = lookup(var.node_pool, "number_of_compute", 0)
 
   project    = var.project_id
   network    = var.network
@@ -23,9 +23,6 @@ module "compute_gcp" {
   # TODO: criar essa input no modulo compute
   # metadata_startup_script = var.metadata_startup_script
 
-  # TODO: como receber labels no hash de node_pools
-  labels = {
-    value = "key"
-  }
+  labels = lookup(var.node_pool, "labels")
 }
 

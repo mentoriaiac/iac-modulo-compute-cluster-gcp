@@ -9,20 +9,26 @@ module "iac-modulo-compute-cluster-gcp" {
 
   node_pools = [
     {
-      name           = "cp-node"
-      machine_type   = "e2-medium"
-      node_locations = "us-central1-b,us-central1-c"
-      count          = 1
-      instance_image = "debian-cloud/debian-9"
-      # metadata_startup_script = "startup-cp.sh"   
+      number_of_compute = 1
+      name              = "cp-node"
+      machine_type      = "e2-medium"
+      instance_image    = "debian-cloud/debian-9"
+      # metadata_startup_script = "startup-cp.sh"
+      labels = {
+        terraform = "true",
+        component = "k8s_control_plane"
+      }
     },
     {
-      name           = "worker-node"
-      machine_type   = "e2-medium"
-      node_locations = "us-central1-b,us-central1-c"
-      count          = 3
-      instance_image = "debian-cloud/debian-9"
+      number_of_compute = 3
+      name              = "worker-node"
+      machine_type      = "e2-medium"
+      instance_image    = "debian-cloud/debian-9"
       # metadata_startup_script = "startup-worker.sh"
+      labels = {
+        terraform = "true",
+        component = "k8s_worker_node"
+      }
     },
   ]
 

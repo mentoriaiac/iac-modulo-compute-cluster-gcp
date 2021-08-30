@@ -1,6 +1,12 @@
 variable "node_pool" {
-  type        = map(any)
-  description = "Map containing information to create a pool of node instances"
+  type = object({
+    number_of_compute = number
+    name              = string
+    instance_image    = string
+    machine_type      = string
+    labels            = map(string)
+  })
+  description = "Object containing information to create a pool of node instances"
 }
 
 variable "project_id" {
