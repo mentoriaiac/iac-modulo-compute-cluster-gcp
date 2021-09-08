@@ -3,12 +3,15 @@ data "google_compute_zones" "available" {
 
 locals {
   count_zones = length(data.google_compute_zones.available.names)
+  # TODO: montar a chamada completa do script de bootstrap do nomad:
+  # https://github.com/mentoriaiac/iac-role-nomad/blob/main/templates/nomad_bootstrap.sh
+  nomad_bootstrap_script = trimprefix(var.node_pool.node_type, "nomad-") == "server" ? "nomad_boostrap.sh server ${var.node_pool.number_of_nodes}" : "nomad_boostrap.sh client"
 }
 
 module "compute_gcp" {
-  source = "github.com/mentoriaiac/iac-modulo-compute-gcp.git"
+  source = "github.com/marcelomansur/iac-modulo-compute-gcp.git?ref=startup_script"
 
-  count = lookup(var.node_pool, "number_of_compute", 0)
+  count = lookup(var.node_pool, "number_of_nodes", 0)
 
   project    = var.project_id
   network    = var.network
@@ -20,8 +23,8 @@ module "compute_gcp" {
   zone          = data.google_compute_zones.available.names[count.index % local.count_zones]
   instance_name = "${lookup(var.node_pool, "name")}-${count.index + 1}"
 
-  # TODO: criar essa input no modulo compute
-  # metadata_startup_script = var.metadata_startup_script
+  # TODO: caso tipo seja nomad, passar local.bootstrap_script
+  metadata_startup_script = can(regex("^nomad.*", var.node_pool.node_type)) ? local.nomad_bootstrap_script : ""
 
   labels = lookup(var.node_pool, "labels")
 }

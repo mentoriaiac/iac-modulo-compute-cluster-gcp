@@ -25,11 +25,12 @@ variable "subnetwork" {
 
 variable "node_pools" {
   type = list(object({
-    number_of_compute = number
-    name              = string
-    instance_image    = string
-    machine_type      = string
-    labels            = map(string)
+    number_of_nodes = number
+    name            = string
+    node_type       = string
+    instance_image  = string
+    machine_type    = string
+    labels          = map(string)
   }))
   description = "Lis of objects containing information to create pools of node instances"
 }
