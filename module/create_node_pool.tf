@@ -9,6 +9,8 @@ locals {
 }
 
 module "compute_gcp" {
+  # TODO: Alterar projeto após aprovação do PR:
+  # https://github.com/mentoriaiac/iac-modulo-compute-gcp/pull/4
   source = "github.com/marcelomansur/iac-modulo-compute-gcp.git?ref=startup_script"
 
   count = lookup(var.node_pool, "number_of_nodes", 0)
