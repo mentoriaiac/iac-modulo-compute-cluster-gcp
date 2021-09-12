@@ -5,6 +5,7 @@ variable "node_pool" {
     instance_image          = string
     metadata_startup_script = optional(string)
     machine_type            = string
+    network_tags            = list(string)
     labels                  = map(string)
   })
   description = "Object containing information to create a pool of node instances"

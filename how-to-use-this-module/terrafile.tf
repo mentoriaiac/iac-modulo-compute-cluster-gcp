@@ -15,6 +15,7 @@ module "iac-modulo-compute-cluster-gcp" {
       machine_type    = "e2-medium"
       instance_image  = "debian-cloud/debian-9"
       node_type       = "rke-cp"
+      network_tags    = ["rke-cp-node"]
       labels = {
         terraform = "true",
         component = "k8s_control_plane"
@@ -26,6 +27,7 @@ module "iac-modulo-compute-cluster-gcp" {
       machine_type    = "e2-medium"
       instance_image  = "debian-cloud/debian-9"
       node_type       = "rke-worker"
+      network_tags    = ["rke-worker-node"]
       labels = {
         terraform = "true",
         component = "k8s_worker_node"
@@ -39,6 +41,7 @@ module "iac-modulo-compute-cluster-gcp" {
       machine_type            = "e2-medium"
       instance_image          = "debian-cloud/debian-9"
       metadata_startup_script = "echo 'nomad_boostrap.sh both 1' > /tmp/nomad_bootstrap.txt"
+      network_tags            = ["nomad-both-server"]
       labels = {
         terraform = "true",
         component = "nomad_server"
@@ -51,6 +54,7 @@ module "iac-modulo-compute-cluster-gcp" {
       machine_type            = "e2-medium"
       instance_image          = "debian-cloud/debian-9"
       metadata_startup_script = "echo 'nomad_boostrap.sh server 3' > /tmp/nomad_bootstrap.txt"
+      network_tags            = ["nomad-server"]
       labels = {
         terraform = "true",
         component = "nomad_server"
@@ -62,6 +66,7 @@ module "iac-modulo-compute-cluster-gcp" {
       machine_type            = "e2-medium"
       instance_image          = "debian-cloud/debian-9"
       metadata_startup_script = "echo 'nomad_boostrap.sh client' > /tmp/nomad_bootstrap.txt"
+      network_tags            = ["nomad-client"]
       labels = {
         terraform = "true",
         component = "nomad_client"

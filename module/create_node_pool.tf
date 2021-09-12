@@ -22,6 +22,7 @@ module "compute_gcp" {
 
   metadata_startup_script = lookup(var.node_pool, "metadata_startup_script")
 
+  tags   = lookup(var.node_pool, "network_tags")
   labels = lookup(var.node_pool, "labels")
 }
 
