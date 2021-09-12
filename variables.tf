@@ -1,4 +1,4 @@
-variable "project_id" {
+variable "project" {
   type        = string
   description = "Project ID used to create node instances"
 }
@@ -22,16 +22,7 @@ variable "subnetwork" {
   type        = string
   description = "The cluster subnetwork"
 }
-
-variable "node_pools" {
-  type = list(object({
-    number_of_nodes         = number
-    name                    = string
-    metadata_startup_script = optional(string)
-    instance_image          = string
-    machine_type            = string
-    network_tags            = list(string)
-    labels                  = map(string)
-  }))
-  description = "List of objects containing information to create pools of node instances"
+variable "node_list" {
+  description = "Map of compute for cluster"
+  type = map
 }

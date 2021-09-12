@@ -1,4 +1,4 @@
 provider "google" {
-  project = "hardening-322021"
+  project = "direct-link-325016"
   region  = "us-central1"
 }

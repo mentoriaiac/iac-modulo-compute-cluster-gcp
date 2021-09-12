@@ -17,7 +17,7 @@ Este repositório permite a criação de um cluster na Google Cloud Platform (GC
 
 | Nome | Descrição | Tipo | Valor padrão | Obrigatório |
 |------|-------------|------|---------|:--------:|
-| project_id | ID do projeto onde será criado o cluster | `string` | - | sim |
+| project | ID do projeto onde será criado o cluster | `string` | - | sim |
 | name | Nome do cluster | `string` | - | sim |
 | region | Região do cluster | `string` | - | sim |
 | network | Rede do cluster | `string` | - | sim |

@@ -30,4 +30,4 @@ override.tf.json
 # example: *tfplan*
 tfplan
 
-**/credentials
+**/credentials/*.json
