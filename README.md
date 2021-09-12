@@ -40,9 +40,10 @@ object {
 
 | Nome | Descrição | Tipo | Valor padrão | Obrigatório |
 |------|-------------|------|---------|:--------:|
-| number_of_compute | Número de instâncias | `number` | - | sim |
+| number_of_nodes | Número de instâncias | `number` | - | sim |
 | name | Nome do componente do cluster | `string` | - | sim |
 | instance_image | Image usada na criação da instância | `string` | - | sim |
+| metadata_startup_script | Script executado na incialização das instâncias | `string` | - | não |
 | machine_type | Tipo (ou tamanho) da instância  | `string` | - | sim |
 | labels | Labels que serão associados às instâncias | `map(string)` | - | sim |
 
